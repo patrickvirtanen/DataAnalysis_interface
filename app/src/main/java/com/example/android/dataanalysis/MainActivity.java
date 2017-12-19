@@ -1,27 +1,33 @@
 package com.example.android.dataanalysis;
 
-
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
 
     LineChart mLineChart;
+    BarChart mBarChart;
     InputStream inputStream;
     String [] sensorData;
     ArrayList<Entry> entries = new ArrayList<>();
@@ -33,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mLineChart = findViewById(R.id.linegraph);
 
-
         // METOD FÖR ATT LÄSA IN CSV-FILEN OCH GÖRA OM VÄRDERNA TILL ENTRIES
         importData();
 
@@ -41,17 +46,16 @@ public class MainActivity extends AppCompatActivity {
         LineDataSet dataSet = new LineDataSet(entries, "Temperatures");
         LineData lineData = new LineData(dataSet);
         mLineChart.setData(lineData);
-        dataSet.setColor(Color.GREEN);
+        dataSet.setColor(Color.RED);
         dataSet.setDrawCircles(false);
         dataSet.setDrawValues(false);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        dataSet.setDrawFilled(true);
-        dataSet.setFillColor(Color.GREEN);
         mLineChart.getDescription().setText("");
         mLineChart.getLegend().setEnabled(false);
         mLineChart.invalidate();
 
-        // INSTÄLLNINGAR FÖR Y- OCH X AXLAR
+
+        // INSTÄLLNINGAR FÖR Y- OCH X AXLAR LINECHART
         YAxis leftAxis = mLineChart.getAxisLeft();
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setAxisMinimum(0f);
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         XAxis xAxis = mLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter(new DateAxisValueFormatter(null));
 
     }
 
@@ -75,20 +80,19 @@ public class MainActivity extends AppCompatActivity {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             String csvLine;
-            int i = 0;
 
                 while ((csvLine = reader.readLine()) != null) {
 
                 sensorData = csvLine.split(",");
 
                 sensorData[0] = sensorData[0].substring(0, sensorData[0].length() - 1).replaceAll("\\s+", "");
+                sensorData[1] = sensorData[1].replaceAll("\\D", "");
 
                         float temp = Float.parseFloat(sensorData[0]);
+                        float date = Float.parseFloat(sensorData[1]);
 
-                        entries.add(new Entry(i, temp));
+                        entries.add(new Entry(date, temp));
 
-                        xAxis.add(sensorData[1]);
-                        i++;
                     }
 
             } catch (IOException ex) {
@@ -96,3 +100,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+
+class DateAxisValueFormatter implements IAxisValueFormatter {
+    private String[] mValues;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+
+
+    public DateAxisValueFormatter(String[] values) {
+        this.mValues = values; }
+
+        @Override
+    public String getFormattedValue(float value, AxisBase axis) {
+        return sdf.format(new Date((long)value));
+        }
+    }
+
