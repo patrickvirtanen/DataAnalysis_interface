@@ -116,4 +116,3 @@ class DateAxisValueFormatter implements IAxisValueFormatter {
         return sdf.format(new Date((long)value));
         }
     }
-
