@@ -1,5 +1,7 @@
 package com.example.android.dataanalysis;
 
+import java.util.ArrayList;
+
 /**
  * Created by patri on 12/20/2017.
  */
@@ -10,6 +12,7 @@ public class Person {
     private double averageTemp;
     private double lowestTemp;
     private double highestTemp;
+
 
     public Person(String name, double averageTemp, double lowestTemp, double highestTemp){
         this.name = name;
@@ -32,6 +35,8 @@ public class Person {
 
     public void setAverageTemp(double averageTemp) {
         this.averageTemp = averageTemp;
+
+
     }
 
     public double getLowestTemp() {

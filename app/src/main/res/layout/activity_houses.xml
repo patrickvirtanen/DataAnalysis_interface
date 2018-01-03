@@ -8,7 +8,7 @@
     tools:context="com.example.android.dataanalysis.Houses">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/avg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameDetail" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/lowest"
         android:layout_width="86dp"
         android:layout_height="37dp"
         android:layout_marginStart="16dp"
@@ -29,7 +29,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/avg" />
 
     <TextView
         android:id="@+id/nameDetail"
@@ -44,16 +44,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/highest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="HIGHEST"
         android:textColor="@android:color/background_light"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/lowest" />
 
     <Button
         android:id="@+id/showGraph"
