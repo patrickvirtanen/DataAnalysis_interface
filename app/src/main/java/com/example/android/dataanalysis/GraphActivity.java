@@ -64,6 +64,10 @@ public class GraphActivity extends AppCompatActivity {
     InputStream inputStream;
     String[] sensorData;
 
+    private Button mButton;
+    Houses h1;
+
+
     ArrayList<Entry> entries = new ArrayList<>();
     ArrayList<String> dates = new ArrayList<>();
 
@@ -81,7 +85,7 @@ public class GraphActivity extends AppCompatActivity {
     ArrayList<String> smallerDateSet2 = new ArrayList<>();
 
 
-    private TempData mTempData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +93,17 @@ public class GraphActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graph);
 
         mLineChart = findViewById(R.id.linegraph);
+        mButton = findViewById(R.id.buttonTest);
 
 
         drawDiagram();
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 
 
     }
@@ -214,6 +226,7 @@ public class GraphActivity extends AppCompatActivity {
                 allTemps.add(temp);
 
 
+
                 entries.add(new Entry(index, temp));
                 dates.add(sensorData[1]);
                 index++;
@@ -251,10 +264,9 @@ public class GraphActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<Float> getList() {
+    public ArrayList getList() {
 
         return allTemps;
-
     }
 }
 

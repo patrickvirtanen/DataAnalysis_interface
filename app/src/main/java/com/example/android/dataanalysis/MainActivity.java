@@ -38,14 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private Button mKit;
     private Button mPatrick;
     private Button mComparePersons;
-    private TempData mTempData;
+    private GraphActivity mGraphActivity;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mGraphActivity = new GraphActivity();
 
         mAndreas = findViewById(R.id.Andreas);
         mKit = findViewById(R.id.Kit);
